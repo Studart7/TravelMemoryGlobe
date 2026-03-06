@@ -19,11 +19,11 @@ export function Earth() {
     const pointerDownPos = useRef<THREE.Vector2>(new THREE.Vector2());
 
     const [colorMap, bumpMap, specularMap, cloudsMap, cloudsAlphaMap] = useTexture([
-        '/materials/8081_earthmap10k.jpg',
-        '/materials/8081_earthbump10k.jpg',
-        '/materials/8081_earthlights10k.jpg',
-        '/materials/8081_earthhiresclouds4K.jpg',
-        '/materials/earthcloudmaptrans.jpg',
+        'materials/8081_earthmap10k.jpg',
+        'materials/8081_earthbump10k.jpg',
+        'materials/8081_earthlights10k.jpg',
+        'materials/8081_earthhiresclouds4K.jpg',
+        'materials/earthcloudmaptrans.jpg',
     ]);
 
     useFrame(() => {
