@@ -8,7 +8,7 @@ An interactive 3D globe application built with **React Three Fiber** and **Tailw
 
 ## 🚀 Overview
 
-**Travel Memory Globe** allows users to visualize their travels on a luxury 3D Earth. Users can interact with the globe, search for specific locations, and add pins representing their memories, complete with titles, chronological dates, and photo galleries.
+**Travel Memory Globe** allows users to visualize their travels on a 3D Earth. Users can interact with the globe, search for specific locations, and add pins representing their memories, complete with titles, chronological dates, and photo galleries.
 
 This project focuses on **Visual Excellence** (PBR textures, atmospheric shaders) and **Premium UX** (smooth transitions, accessible touch controls, and intuitive data management).
 
