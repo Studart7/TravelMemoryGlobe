@@ -1,0 +1,54 @@
+# Plano de Implementação: Arquitetura de Memórias e UI Premium
+
+## Objetivo
+Refinar a arquitetura de dados e componentes para suportar um sistema de memórias robusto, escalável e com UX de alta fidelidade, incorporando feedback sobre modelos de dados e separação de responsabilidades.
+
+## Mudanças Propostas
+
+### 1. Modelo de Dados Refinado ([src/store/useGlobeStore.ts](file:///c:/Users/Daniel/Desktop/Github_Repos/TravelMemoryGlobe/src/store/useGlobeStore.ts))
+- **Schema de Foto**:
+  ```typescript
+  export interface Photo {
+    id: string;
+    url: string;
+    thumbnailUrl?: string;
+    name: string;
+    createdAt: string;
+  }
+  ```
+- **Pin Schema**: Atualizar para incluir `photos: Photo[]`, `notes: string` (obrigatório) e `location: string` (obrigatório).
+- **Semântica de Foco**: Introduzir `focusSource: 'click' | 'search' | 'list' | 'create' | null` para controle refinado da câmera.
+
+### 2. Separação de Componentes UI
+- **SearchBar**: Limpar lógica de exibição de detalhes. Focar apenas em input e lista de resultados.
+- **PinDetailsPanel [NEW]**: Novo componente lateral para exibir:
+    - Cabeçalho com Localização e Data.
+    - Galeria `PhotoStack`.
+    - Área de Notas.
+    - Ações (Editar/Apagar).
+- **ConfirmDialog [NEW]**: Componente genérico para prompts de confirmação (estilo Aurora UI).
+
+### 3. Sistema de Galeria Desacoplado
+- **PhotoStack**: Visual de baralho (3 fotos visíveis, rotação leve). Lógica circular de navegação.
+- **PhotoGrid**: Modal com grid de todas as fotos do pin.
+- **Lightbox**: Visualização individual em tela cheia com setas de navegação.
+- **Edge Cases**: Empty states específicos para pins sem fotos.
+
+### 4. Controle de Câmera (GSAP)
+- Ajustar [Controls.tsx](file:///c:/Users/Daniel/Desktop/Github_Repos/TravelMemoryGlobe/src/components/Globe/Controls.tsx) para ler o `focusSource`:
+    - `click` | `create`: Distância `18` (mais próximo).
+    - `search` | `list`: Distância `26` (contextual).
+
+### 5. Fluxos de UX e Segurança
+- **Dirty Check**: Implementar hook `useDirtyCheck` no Modal de Edição.
+- **Exclusão Segura**: Prompt de confirmação exibindo o nome do local antes de deletar.
+
+## Plano de Verificação
+
+### Testes de Robustez
+- **Troca Rápida**: Clicar em múltiplos pins em sequência para validar estabilidade do GSAP.
+- **Delete Integrity**: Verificar se ao deletar um pin, a UI do `PinDetailsPanel` fecha e a busca é atualizada.
+- **Mídia**: Validar estados de 0, 1, 2 e 5 fotos na Galeria.
+
+### Qualidade Técnica
+- `npm run lint` & `npm run build`.

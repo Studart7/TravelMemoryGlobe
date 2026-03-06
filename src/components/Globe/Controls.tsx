@@ -10,6 +10,7 @@ export function Controls() {
     const controlsRef = useRef<any>(null);
     const { camera, scene } = useThree();
     const activePinId = useGlobeStore((state) => state.activePinId);
+    const focusSource = useGlobeStore((state) => state.focusSource);
 
     useEffect(() => {
         if (!controlsRef.current) return;
@@ -21,13 +22,18 @@ export function Controls() {
                 activePinObject.getWorldPosition(pinWorldPos);
 
                 const direction = pinWorldPos.clone().normalize();
-                const targetCameraPos = direction.multiplyScalar(20);
+
+                // Dynamic distance based on focusSource
+                // 'click' | 'create' -> closer (18)
+                // 'search' | 'list' -> contextual (26)
+                const distance = (focusSource === 'search' || focusSource === 'list') ? 26 : 18;
+                const targetCameraPos = direction.multiplyScalar(distance);
 
                 gsap.to(camera.position, {
                     x: targetCameraPos.x,
                     y: targetCameraPos.y,
                     z: targetCameraPos.z,
-                    duration: 1.5,
+                    duration: focusSource === 'search' ? 2.0 : 1.5,
                     ease: "power3.inOut"
                 });
 

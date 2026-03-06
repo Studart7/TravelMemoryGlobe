@@ -1,9 +1,15 @@
 import { GlobeScene } from './components/Globe';
 import { SearchBar } from './components/UI/SearchBar';
+import { PinModal } from './components/UI/PinModal';
+import { PinSidebar } from './components/UI/PinSidebar';
+import { PinDetailsPanel } from './components/UI/PinDetailsPanel';
 
 function App() {
     return (
-        <div className="w-full h-full relative">
+        <div className="w-full h-full relative overflow-hidden">
+            <PinModal />
+            <PinSidebar />
+            <PinDetailsPanel />
             <div className="absolute top-0 left-0 w-full p-6 z-10 pointer-events-none">
                 <h1 className="text-3xl font-bold font-sans tracking-tight text-white drop-shadow-md">
                     Travel Memory Globe

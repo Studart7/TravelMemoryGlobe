@@ -14,7 +14,8 @@ export function PinMarkers() {
                 const isActive = pin.id === activePinId;
 
                 const isMatch = searchTerm
-                    ? (pin.title?.toLowerCase().includes(searchTerm.toLowerCase()) || pin.notes?.toLowerCase().includes(searchTerm.toLowerCase()))
+                    ? (pin.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        pin.notes?.toLowerCase().includes(searchTerm.toLowerCase()))
                     : true;
 
                 const isHighlighted = isMatch && searchTerm.length > 0;
@@ -29,6 +30,12 @@ export function PinMarkers() {
                         onClick={(e) => {
                             e.stopPropagation();
                             setActivePin(isActive ? null : pin.id);
+                        }}
+                        onPointerDown={(e) => {
+                            e.stopPropagation();
+                        }}
+                        onPointerUp={(e) => {
+                            e.stopPropagation();
                         }}
                         onUpdate={(self) => {
                             self.lookAt(0, 0, 0);
